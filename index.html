@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>14 de Febrero Especial</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Lobster", cursive;
+        background-color: #fde2e4; /* Color de fondo suave */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+        overflow: hidden;
+      }
+      .container {
+        padding: 20px;
+      }
+
+      .kittens-img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      .love-text {
+        margin: 20px 0;
+        font-size: 2rem;
+        color: #555;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+        transition: all 0.3s ease;
+        margin-bottom: 10px;
+      }
+
+      .accept {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .reject {
+        background-color: #f44336;
+        color: white;
+        position: relative;
+      }
+
+      .kittens-img {
+        max-width: 100%;
+        border-radius: 10px;
+        height: 100%;
+        transition: opacity 2s ease;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+      }
+      .kittens-img:first-child {
+        opacity: 1;
+      }
+
+      .image-container {
+        position: relative;
+        height: 200px;
+        margin: auto;
+      }
+      .link{
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="container">
+      <div class="image-container">
+        <img
+          src="./assets/want.gif"
+          alt="Gatitos bonitos"
+          class="kittens-img"
+        />
+        <img src="./assets/cat.gif" alt="Gatitos bonitos" class="kittens-img" />
+        <img
+          src="./assets/heart.gif"
+          alt="Gatitos bonitos"
+          class="kittens-img"
+        />
+        <img
+          src="./assets/success.gif"
+          alt="Gatitos bonitos"
+          class="kittens-img"
+        />
+        
+      </div>
+      <p class="love-text">
+        Tu conviertes mi vida cotidiana en extraordinaria ❤️.
+        </p>
+      <p class="love-text">
+        ¿Quieres seguir siendo mi novia otro 14F más?
+        </p>
+      </p>
+      <div class="buttons">
+        <button id="acceptBtn" class="accept">¡Sí, quiero!</button>
+        <button id="rejectBtn" class="reject">Pensaré...</button>
+      </div>
+    </div>
+    <canvas
+      id="my-canvas"
+      style="position: fixed; top: 0; left: 0; z-index: -1"
+    ></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5.5.1/dist/iro.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/confetti-js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const confettiSettings = {
+          target: "my-canvas",
+        };
+        const confetti = new ConfettiGenerator(confettiSettings);
+        confetti.render();
+      });
+
+      // Animación de cambio de imagen
+      let currentImageIndex = 0;
+      const images = document.querySelectorAll(".kittens-img");
+      setInterval(() => {
+        images[currentImageIndex].style.opacity = 0;
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        images[currentImageIndex].style.opacity = 1;
+      }, 4000); // Cambia cada 4 segundos
+
+      const rejectBtn = document.getElementById("rejectBtn");
+      rejectBtn.addEventListener("mouseover", function () {
+        const funnyMessages = [
+          "¿Piensalo?.",
+          "¿Estás seguro?.",
+          "Tómalo con calma.",
+          "Reflexionalo.",
+          "¡No te precipites!.",
+          "¡Espero que reconsideres!",
+          "¿Dejaras el amor?",
+        ];
+        const randomIndex = Math.floor(Math.random() * funnyMessages.length);
+        rejectBtn.textContent = funnyMessages[randomIndex];
+        const margin = 160; // 10rem considerando 16px = 1rem
+        const newX = Math.max(
+          margin,
+          Math.min(
+            window.innerWidth - rejectBtn.offsetWidth - margin,
+            Math.random() * window.innerWidth
+          )
+        );
+        const newY = Math.max(
+          margin,
+          Math.min(
+            window.innerHeight - rejectBtn.offsetHeight - margin,
+            Math.random() * window.innerHeight
+          )
+        );
+        this.style.top = `${newY}px`;
+        this.style.left = `${newX}px`;
+        this.style.position = "absolute";
+      });
+
+      document
+        .getElementById("acceptBtn")
+        .addEventListener("mouseover", function () {
+          this.style.transform = "scale(1.1)";
+        });
+
+      document
+        .getElementById("acceptBtn")
+        .addEventListener("mouseout", function () {
+          this.style.transform = "scale(1)";
+        });
+
+      document
+        .getElementById("acceptBtn")
+        .addEventListener("click", function () {
+          document.getElementById("content").innerHTML = `
+                <div class="celebration">
+                    <p class="love-text">¡Yay! 🎉 ¡Vamos a tener otro maravilloso 14F juntos!</p>
+                    <button  class="accept" ><a class="link" href="https://www.instagram.com/p/C2a8i8OOZvN/">Conoce tu regalo</a></button>
+                    <img src="./assets/kiss.gif" alt="Gatos besándose">
+                </div>
+            `;
+        });
+    </script>
+  </body>
+</html>
